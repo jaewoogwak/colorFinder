@@ -9,7 +9,7 @@ const Box = ({ id, onClick, randomNum, randomColor, color }) => {
       randomColor={randomColor}
       color={color}
     >
-      {id == randomNum ? "rd" : "box"}
+      {/* {id == randomNum ? "rd" : "box"} */}
     </Space>
   );
 };
