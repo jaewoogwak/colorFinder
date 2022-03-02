@@ -5,8 +5,10 @@ import Box from "./components/Box";
 import Home from "./components/Home";
 import NotFound from "./components/NotFound";
 import Rank from "./components/Rank";
+import { app } from "./fb";
 
 const App = () => {
+  console.log("app", app);
   return (
     <div>
       <Routes>
