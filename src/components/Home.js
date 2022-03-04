@@ -2,6 +2,8 @@ import { useEffect, useRef, useState } from "react";
 import { Link, Routes } from "react-router-dom";
 import styled from "styled-components";
 import Box from "./Box";
+import { collection, addDoc } from "firebase/firestore";
+import { db } from "../fb";
 
 let STAGE_NUM = 1; // 2 ~ 8
 let STAGE_MAX = 13;
@@ -87,6 +89,21 @@ const Home = () => {
     timeCount.current = 6;
   };
 
+  const submitGameInfo = async () => {
+    const userScore = score;
+    const userStage = stage;
+    console.log(`user game info => score : ${score} stage : ${stage}`);
+    try {
+      const docRef = await addDoc(collection(db, "rank"), {
+        score: userScore,
+        stage: userStage,
+      });
+      console.log("Document written with ID: ", docRef.id);
+    } catch (e) {
+      console.error("Error adding document: ", e);
+    }
+  };
+
   useEffect(() => {
     console.log(isRunning);
     init(stage);
@@ -97,6 +114,7 @@ const Home = () => {
       if (timeCount.current <= 0 && isRunning == true) {
         console.log("game over");
         clearInterval(timerId);
+        submitGameInfo();
         setIsRunning(false);
       }
     }, 1000);
