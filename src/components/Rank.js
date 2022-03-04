@@ -9,22 +9,10 @@ const db = getFirestore();
 
 const Rank = () => {
   const [userRank, setUserRank] = useState([]);
-  const [sortedRank, setSortedRank] = useState([]);
+  const [TopRank, setTopRank] = useState([]);
   const navigate = useNavigate();
   const goBack = () => {
     navigate(-1);
-  };
-  const addData = async () => {
-    console.log("adddata!");
-    try {
-      const docRef = await addDoc(collection(db, "rank"), {
-        score: 6,
-        stage: 7,
-      });
-      console.log("Document written with ID: ", docRef.id);
-    } catch (e) {
-      console.error("Error adding document: ", e);
-    }
   };
   const readData = async () => {
     let tmpAry = [];
@@ -40,16 +28,19 @@ const Rank = () => {
     });
     const sortedRankAry = tmpAry.sort((a, b) => b.score - a.score);
     setUserRank(sortedRankAry);
+    let topUsers = [];
+    for (let i = 0; i < 10; i++) {
+      topUsers.push(sortedRankAry[i]);
+    }
+    setTopRank(topUsers);
   };
 
   const sorting = () => {
     const sortedRankAry = userRank.sort((a, b) => b.score - a.score);
     console.log("sortedAry", sortedRankAry);
-    setSortedRank(sortedRankAry);
   };
   useEffect(() => {
     readData();
-    // sorting();
   }, []);
   console.log("userrank", userRank);
   return (
@@ -57,7 +48,7 @@ const Rank = () => {
       <Title>Ranking page</Title>
       <h2 style={{ textAlign: "center" }}>total rank</h2>
       <RankingView>
-        {userRank.map((rank, idx) => (
+        {TopRank.map((rank, idx) => (
           <UserRank key={rank.id}>
             {`${idx + 1}. id : ${rank.id} score : ${rank.score} stage : ${
               rank.stage

@@ -124,23 +124,25 @@ const Home = () => {
     <div>
       {isRunning == true ? (
         <>
-          <InfoBar stage={stage}>
-            <span>stage : {stage}</span>
-            <span>score : {score}</span>
-            <span>second : {timeCount.current}</span>
-          </InfoBar>
-          <View stage={stage} size={size}>
-            {stage_list.map((st) => (
-              <Box
-                key={st}
-                id={st}
-                randomNum={other}
-                randomColor={randColor}
-                color={color}
-                onClick={onClicked}
-              ></Box>
-            ))}
-          </View>
+          <GameView>
+            <GameStatusBar stage={stage}>
+              <span>stage : {stage}</span>
+              <span>score : {score}</span>
+              <span>second : {timeCount.current}</span>
+            </GameStatusBar>
+            <View stage={stage} size={size}>
+              {stage_list.map((st) => (
+                <Box
+                  key={st}
+                  id={st}
+                  randomNum={other}
+                  randomColor={randColor}
+                  color={color}
+                  onClick={onClicked}
+                ></Box>
+              ))}
+            </View>
+          </GameView>
         </>
       ) : (
         <GameOverView>
@@ -160,21 +162,25 @@ const Home = () => {
     </div>
   );
 };
-
+const GameView = styled.div`
+  margin: 0 auto;
+  margin-top: 100px;
+`;
+const GameStatusBar = styled.div`
+  display: flex;
+  justify-content: space-between;
+  font-size: 25px;
+  width: 400px;
+  gap: 30px;
+  margin: 0 auto;
+`;
 const View = styled.div`
   display: grid;
   width: 400px;
   height: 400px;
   grid-template-columns: repeat(${(props) => props.size}, 1fr);
   gap: 1px;
-`;
-
-const InfoBar = styled.div`
-  display: flex;
-  justify-content: space-between;
-  font-size: 25px;
-  width: 400px;
-  gap: 30px;
+  margin: 0 auto;
 `;
 
 const GameOverView = styled.div``;
