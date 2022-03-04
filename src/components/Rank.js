@@ -3,6 +3,7 @@ import { getFirestore } from "firebase/firestore";
 import { collection, addDoc, getDocs } from "firebase/firestore";
 import app from "../fb";
 import { useEffect, useState } from "react";
+import styled from "styled-components";
 
 const db = getFirestore();
 
@@ -52,21 +53,44 @@ const Rank = () => {
   }, []);
   console.log("userrank", userRank);
   return (
-    <div>
-      <h1>Ranking page</h1>
-      <button onClick={goBack}>돌아가기</button>
-      <div>
-        <h2>total rank</h2>
-        <div>
-          {userRank.map((rank) => (
-            <div key={rank.id}>
-              id : {rank.id} stage : {rank.stage} score : {rank.score}
-            </div>
-          ))}
-        </div>
-      </div>
-    </div>
+    <RankPageView>
+      <Title>Ranking page</Title>
+      <h2 style={{ textAlign: "center" }}>total rank</h2>
+      <RankingView>
+        {userRank.map((rank, idx) => (
+          <UserRank key={rank.id}>
+            {`${idx + 1}. id : ${rank.id} score : ${rank.score} stage : ${
+              rank.stage
+            }`}
+          </UserRank>
+        ))}
+      </RankingView>
+      <BackButton onClick={goBack}>Restart</BackButton>
+    </RankPageView>
   );
 };
-
+const RankPageView = styled.div``;
+const Title = styled.div`
+  text-align: center;
+  font-size: 52px;
+  font-weight: 600;
+`;
+const BackButton = styled.div`
+  border: black solid 3px;
+  width: 100px;
+  height: 34px;
+  font-size: 22px;
+  text-align: center;
+  cursor: pointer;
+  margin: 0 auto;
+  margin-top: 50px;
+`;
+const RankingView = styled.div`
+  margin: 0 auto;
+`;
+const UserRank = styled.div`
+  text-align: center;
+  font-size: 20px;
+  margin-top: 15px;
+`;
 export default Rank;
