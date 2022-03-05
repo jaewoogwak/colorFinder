@@ -126,9 +126,9 @@ const Home = () => {
         <>
           <GameView>
             <GameStatusBar stage={stage}>
-              <span>stage : {stage}</span>
-              <span>score : {score}</span>
-              <span>second : {timeCount.current}</span>
+              <Stage>stage : {stage}</Stage>
+              <Score>score : {score}</Score>
+              <Second>second : {timeCount.current}</Second>
             </GameStatusBar>
             <View stage={stage} size={size}>
               {stage_list.map((st) => (
@@ -146,17 +146,17 @@ const Home = () => {
         </>
       ) : (
         <GameOverView>
-          <h1>game over!</h1>
-          <h2>maximum stage : {stage}</h2>
-          <h2>your score :{score}</h2>
-          <div>
-            <span>
-              <ReStartButton onClick={onClickReStart}>Restart</ReStartButton>
-            </span>
-            <span>
-              <Link to="/rank">유저 랭킹</Link>
-            </span>
-          </div>
+          <GameOver>GAME OVER!!!</GameOver>
+          <MaxStage>maximum stage : {stage}</MaxStage>
+          <MaxScore>your score : {score}</MaxScore>
+          <Restart>
+            <ReStartButton onClick={onClickReStart}>Restart</ReStartButton>
+          </Restart>
+          <RankPage>
+            <Link to="/rank">
+              {">"} Top Rank {"<"}
+            </Link>
+          </RankPage>
         </GameOverView>
       )}
     </div>
@@ -165,6 +165,7 @@ const Home = () => {
 const GameView = styled.div`
   margin: 0 auto;
   margin-top: 100px;
+  text-align: center;
 `;
 const GameStatusBar = styled.div`
   display: flex;
@@ -174,6 +175,9 @@ const GameStatusBar = styled.div`
   gap: 30px;
   margin: 0 auto;
 `;
+const Stage = styled.span``;
+const Score = styled.span``;
+const Second = styled.span``;
 const View = styled.div`
   display: grid;
   width: 400px;
@@ -182,11 +186,44 @@ const View = styled.div`
   gap: 1px;
   margin: 0 auto;
 `;
-
-const GameOverView = styled.div``;
-
+const GameOverView = styled.div`
+  margin: 0 auto;
+  margin-top: 100px;
+`;
+const GameOver = styled.h1`
+  text-align: center;
+  font-size: 54px;
+  margin-bottom: 60px;
+`;
+const MaxStage = styled.h2`
+  text-align: center;
+  font-size: 28px;
+`;
+const MaxScore = styled.h2`
+  text-align: center;
+  font-size: 28px;
+`;
+const Restart = styled.div`
+  margin: 0 auto;
+  margin-top: 50px;
+  margin-bottom: 10px;
+  text-align: center;
+`;
 const ReStartButton = styled.button`
   background-color: aqua;
+  margin: 0 auto;
+  text-align: center;
+  width: 140px;
+  height: 30px;
+  font-size: 22px;
+  cursor: pointer;
+`;
+const RankPage = styled.div`
+  margin: 0 auto;
+  text-align: center;
+  width: 160px;
+  height: 30px;
+  font-size: 22px;
 `;
 
 export default Home;

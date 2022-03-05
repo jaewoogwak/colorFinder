@@ -29,9 +29,12 @@ const Rank = () => {
     const sortedRankAry = tmpAry.sort((a, b) => b.score - a.score);
     setUserRank(sortedRankAry);
     let topUsers = [];
-    for (let i = 0; i < 10; i++) {
-      topUsers.push(sortedRankAry[i]);
+    if (tmpAry.length >= 10) {
+      for (let i = 0; i < 10; i++) {
+        topUsers.push(sortedRankAry[i]);
+      }
     }
+
     setTopRank(topUsers);
   };
 
@@ -43,41 +46,59 @@ const Rank = () => {
     readData();
   }, []);
   console.log("userrank", userRank);
+  console.log("topRank", TopRank);
   return (
     <RankPageView>
       <Title>Ranking page</Title>
-      <h2 style={{ textAlign: "center" }}>total rank</h2>
       <RankingView>
-        {TopRank.map((rank, idx) => (
-          <UserRank key={rank.id}>
-            {`${idx + 1}. id : ${rank.id} score : ${rank.score} stage : ${
-              rank.stage
-            }`}
-          </UserRank>
-        ))}
+        {userRank.length >= 10
+          ? TopRank.map((rank, idx) => (
+              <UserRank key={rank.id}>
+                {`${idx + 1}. id : ${rank.id} score : ${rank.score} stage : ${
+                  rank.stage
+                }`}
+              </UserRank>
+            ))
+          : userRank.map((rank, idx) => (
+              <UserRank key={rank.id}>
+                {`${idx + 1}. id : ${rank.id} score : ${rank.score} stage : ${
+                  rank.stage
+                }`}
+              </UserRank>
+            ))}
       </RankingView>
-      <BackButton onClick={goBack}>Restart</BackButton>
+      <Restart>
+        <ReStartButton onClick={goBack}>Restart</ReStartButton>
+      </Restart>
     </RankPageView>
   );
 };
-const RankPageView = styled.div``;
+const RankPageView = styled.div`
+  margin-top: 30px;
+`;
+const RankingView = styled.div`
+  margin: 0 auto;
+  margin-top: 50px;
+`;
 const Title = styled.div`
   text-align: center;
   font-size: 52px;
   font-weight: 600;
 `;
-const BackButton = styled.div`
-  border: black solid 3px;
-  width: 100px;
-  height: 34px;
-  font-size: 22px;
-  text-align: center;
-  cursor: pointer;
+const Restart = styled.div`
   margin: 0 auto;
   margin-top: 50px;
+  margin-bottom: 10px;
+  text-align: center;
 `;
-const RankingView = styled.div`
+const ReStartButton = styled.button`
+  background-color: aqua;
+  text-align: center;
   margin: 0 auto;
+  width: 140px;
+  height: 30px;
+  font-size: 22px;
+  cursor: pointer;
 `;
 const UserRank = styled.div`
   text-align: center;
