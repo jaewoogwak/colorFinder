@@ -5,7 +5,7 @@ import Box from "./Box";
 import { collection, addDoc } from "firebase/firestore";
 import { db } from "../fb";
 
-let STAGE_NUM = 1; // 2 ~ 8
+let STAGE_NUM = 1;
 let STAGE_MAX = 13;
 const Home = () => {
   const [isRunning, setIsRunning] = useState(true);
@@ -126,9 +126,9 @@ const Home = () => {
         <>
           <GameView>
             <GameStatusBar stage={stage}>
-              <Stage>stage : {stage}</Stage>
-              <Score>score : {score}</Score>
-              <Second>second : {timeCount.current}</Second>
+              <Stage>{stage} stage</Stage>
+              <Score>{score} score</Score>
+              <Second sec={timeCount.current}>{timeCount.current}s</Second>
             </GameStatusBar>
             <View stage={stage} size={size}>
               {stage_list.map((st) => (
@@ -175,9 +175,21 @@ const GameStatusBar = styled.div`
   gap: 30px;
   margin: 0 auto;
 `;
-const Stage = styled.span``;
-const Score = styled.span``;
-const Second = styled.span``;
+const Stage = styled.span`
+  font-weight: 700;
+  font-size: 32px;
+`;
+const Score = styled.span`
+  font-weight: 700;
+  font-size: 28px;
+  text-align: center;
+  padding-top: 5px;
+`;
+const Second = styled.span`
+  font-weight: 700;
+  font-size: 32px;
+  color: ${(props) => (props.sec <= 3 ? "red" : "black")};
+`;
 const View = styled.div`
   display: grid;
   width: 400px;
