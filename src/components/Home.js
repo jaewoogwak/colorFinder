@@ -5,7 +5,7 @@ import Box from "./Box";
 import { collection, addDoc } from "firebase/firestore";
 import { db } from "../fb";
 
-let STAGE_NUM = 1;
+let STAGE_NUM = 1; // dd
 let STAGE_MAX = 13;
 const Home = () => {
   const [isRunning, setIsRunning] = useState(true);
