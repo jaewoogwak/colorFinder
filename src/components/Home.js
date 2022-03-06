@@ -16,11 +16,11 @@ const Home = () => {
   const [color, setColor] = useState();
   const [randColor, setRandColor] = useState();
   const [score, setScore] = useState(0);
-  const [time, setTime] = useState(stage + 5);
+  // const [time, setTime] = useState(stage + 5);
   let timeCount = useRef(stage + 5);
   const [tCount, setTCount] = useState(timeCount.current);
   const init = () => {
-    console.log("init");
+    console.log("init", size);
     let arr = [];
     for (let i = 0; i < size * size; i++) {
       arr.push(i + 1);
@@ -57,9 +57,9 @@ const Home = () => {
     if (e.target.id == other) {
       console.log("clicked!", e.target.id);
       STAGE_NUM += 1;
-
       setScore((prev) => prev + stage * 2);
       if (STAGE_NUM <= STAGE_MAX) {
+        console.log("set size", STAGE_NUM);
         setSize(STAGE_NUM);
       }
       setStage(STAGE_NUM);
@@ -68,21 +68,24 @@ const Home = () => {
     } else {
       console.log("남은 시간 감소 및 스코어 감소");
       // 스코어 감소
-      setScore((prev) => {
-        {
-          if (prev - stage / 2 < 0) {
-            return 0;
-          }
-          console.log("score down");
-          return prev - stage;
-        }
-      });
+      // setScore((prev) => {
+      //   {
+      //     if (prev - stage / 2 < 0) {
+      //       return 0;
+      //     }
+      //     console.log("score down");
+      //     return prev - stage;
+      //   }
+      // });
       // 남은 시간 감소
       timeCount.current -= 3;
     }
   };
 
   const onClickReStart = () => {
+    setSize(2);
+    setStage(1);
+    STAGE_NUM = 1;
     setIsRunning((prev) => !prev);
     init(1);
     setScore(0);
@@ -104,18 +107,25 @@ const Home = () => {
     }
   };
 
+  const f = () => {
+    setSize(2);
+    setStage(1);
+  };
+
   useEffect(() => {
     console.log(isRunning);
-    init(stage);
+    init();
     const timerId = setInterval(() => {
       timeCount.current = timeCount.current - 1;
       setTCount((prev) => prev - 1);
-      console.log("time in useEffect", timeCount, tCount);
-      if (timeCount.current <= 0 && isRunning == true) {
+      console.log("time in useEffect", timeCount, tCount, isRunning, size);
+      if (timeCount.current <= 0) {
         console.log("game over");
         clearInterval(timerId);
         submitGameInfo();
         setIsRunning(false);
+
+        init();
       }
     }, 1000);
     return () => clearInterval(timerId);

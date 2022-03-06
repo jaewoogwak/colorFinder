@@ -7,8 +7,6 @@ import firebaseConfig from "./key";
 
 // Your web app's Firebase configuration
 
-export default firebaseConfig;
-
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
 const db = getFirestore();

@@ -1,7 +1,6 @@
 import { Link, useNavigate } from "react-router-dom";
 import { getFirestore } from "firebase/firestore";
 import { collection, addDoc, getDocs } from "firebase/firestore";
-import app from "../fb";
 import { useEffect, useState } from "react";
 import styled from "styled-components";
 
@@ -12,7 +11,7 @@ const Rank = () => {
   const [TopRank, setTopRank] = useState([]);
   const navigate = useNavigate();
   const goBack = () => {
-    navigate(-1);
+    <Link to="/"></Link>;
   };
   const readData = async () => {
     let tmpAry = [];
@@ -38,10 +37,6 @@ const Rank = () => {
     setTopRank(topUsers);
   };
 
-  const sorting = () => {
-    const sortedRankAry = userRank.sort((a, b) => b.score - a.score);
-    console.log("sortedAry", sortedRankAry);
-  };
   useEffect(() => {
     readData();
   }, []);
@@ -67,6 +62,7 @@ const Rank = () => {
               </UserRank>
             ))}
       </RankingView>
+      <Link to="/">Restart</Link>
       <Restart>
         <ReStartButton onClick={goBack}>Restart</ReStartButton>
       </Restart>
