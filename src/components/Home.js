@@ -4,9 +4,29 @@ import styled from "styled-components";
 import Box from "./Box";
 import { collection, addDoc } from "firebase/firestore";
 import { db } from "../fb";
+import create from "zustand";
+import { easy } from "../Color";
 
 let STAGE_NUM = 1; // dd
 let STAGE_MAX = 13;
+// export const useStore = create((set) => ({
+//   size: 2,
+//   stage: 1,
+//   score: 0,
+//   isRunning: true,
+//   setSize2: () => set((state) => ({ size: state })),
+//   setStage2: () => set((state) => ({ stage: state })),
+//   setScore2: () => set((state) => ({ score: state })),
+//   setIsRunning2: () => set((state) => ({ isRunning: state })),
+//   onClickReStart() {
+//     this.setSize2();
+//     this.setStage2();
+//     this.setScore2();
+//     STAGE_NUM = 1;
+//     this.setIsRunning2();
+//     // timeCount.current = 6;
+//   },
+// }));
 const Home = () => {
   const [isRunning, setIsRunning] = useState(true);
   const [stage, setStage] = useState(1);
@@ -16,9 +36,26 @@ const Home = () => {
   const [color, setColor] = useState();
   const [randColor, setRandColor] = useState();
   const [score, setScore] = useState(0);
-  // const [time, setTime] = useState(stage + 5);
   let timeCount = useRef(stage + 5);
   const [tCount, setTCount] = useState(timeCount.current);
+  const colorSet = easy;
+  // const { isRunning, setIsRunning2 } = useStore();
+  // const { stage, setStage2 } = useStore();
+  // const { size, setSize2 } = useStore();
+  // const { score, setScore2 } = useStore();
+  // const [time, setTime] = useState(stage + 5);
+  //# let timeCount = useRef(stage + 5);
+  // const { onClickReStart } = useStore();
+
+  const onClickReStart = () => {
+    setSize(2);
+    setStage(1);
+    setScore(0);
+    STAGE_NUM = 1;
+    setIsRunning((prev) => !prev);
+    init();
+    timeCount.current = 6;
+  };
   const init = () => {
     console.log("init", size);
     let arr = [];
@@ -34,35 +71,43 @@ const Home = () => {
     const num = Math.floor(Math.random() * size * size + 1);
     setOther(num);
   };
-
   const getRandomColor = () => {
-    var letters = "0123456789ABCDEF";
-    var color = "#";
-    let rColor = "";
-    for (var i = 0; i < 6; i++) {
-      color += letters[Math.floor(Math.random() * 16)];
-    }
-    for (let i = 0; i < color.length; i++) {
-      if (isNaN(color[i]) == false) {
-        rColor += (color[i] + 9) % 10;
-      } else {
-        rColor += color[i];
-      }
-    }
-    setColor(color);
-    setRandColor(rColor);
+    // var letters = "0123456789ABCDEF";
+    // var color = "#";
+    // let rColor = "";
+    // for (var i = 0; i < 6; i++) {
+    //   color += letters[Math.floor(Math.random() * 16)];
+    // }
+    // for (let i = 0; i < color.length; i++) {
+    //   if (isNaN(color[i]) == false) {
+    //     rColor += (color[i] + 9) % 10;
+    //   } else {
+    //     rColor += color[i];
+    //   }
+    // }
+    // new logic
+    const randomColorNum = Math.floor(Math.random() * colorSet.length);
+    console.log("randNum :", randomColorNum);
+    let color1 = colorSet[randomColorNum].color;
+    let rColor1 = colorSet[randomColorNum].rColor;
+    setColor(color1);
+    setRandColor(rColor1);
   };
 
   const onClicked = (e) => {
     if (e.target.id == other) {
       console.log("clicked!", e.target.id);
       STAGE_NUM += 1;
+      // const scr = score + stage * 2;
+      // setScore2(scr);
       setScore((prev) => prev + stage * 2);
       if (STAGE_NUM <= STAGE_MAX) {
         console.log("set size", STAGE_NUM);
         setSize(STAGE_NUM);
+        // setSize2(STAGE_NUM);
       }
       setStage(STAGE_NUM);
+      // setStage2(STAGE_NUM);
       timeCount.current += 3;
       console.log("update sec!");
     } else {
@@ -82,17 +127,8 @@ const Home = () => {
     }
   };
 
-  const onClickReStart = () => {
-    setSize(2);
-    setStage(1);
-    STAGE_NUM = 1;
-    setIsRunning((prev) => !prev);
-    init(1);
-    setScore(0);
-    timeCount.current = 6;
-  };
-
   const submitGameInfo = async () => {
+    console.log("submit game info");
     const userScore = score;
     const userStage = stage;
     console.log(`user game info => score : ${score} stage : ${stage}`);
@@ -107,11 +143,6 @@ const Home = () => {
     }
   };
 
-  const f = () => {
-    setSize(2);
-    setStage(1);
-  };
-
   useEffect(() => {
     console.log(isRunning);
     init();
@@ -119,13 +150,11 @@ const Home = () => {
       timeCount.current = timeCount.current - 1;
       setTCount((prev) => prev - 1);
       console.log("time in useEffect", timeCount, tCount, isRunning, size);
-      if (timeCount.current <= 0) {
+      if (timeCount.current <= 0 && isRunning == true) {
         console.log("game over");
         clearInterval(timerId);
-        submitGameInfo();
+        // submitGameInfo();
         setIsRunning(false);
-
-        init();
       }
     }, 1000);
     return () => clearInterval(timerId);
@@ -162,11 +191,11 @@ const Home = () => {
           <Restart>
             <ReStartButton onClick={onClickReStart}>Restart</ReStartButton>
           </Restart>
-          <RankPage>
+          {/* <RankPage>
             <Link to="/rank">
               {">"} Top Rank {"<"}
             </Link>
-          </RankPage>
+          </RankPage> */}
         </GameOverView>
       )}
     </div>

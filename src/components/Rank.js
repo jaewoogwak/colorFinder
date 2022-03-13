@@ -3,15 +3,16 @@ import { getFirestore } from "firebase/firestore";
 import { collection, addDoc, getDocs } from "firebase/firestore";
 import { useEffect, useState } from "react";
 import styled from "styled-components";
+// import { useStore } from "./Home";
 
 const db = getFirestore();
 
 const Rank = () => {
   const [userRank, setUserRank] = useState([]);
   const [TopRank, setTopRank] = useState([]);
-  const navigate = useNavigate();
+  // const { onClickRestart } = useStore();
   const goBack = () => {
-    <Link to="/"></Link>;
+    // onClickRestart();
   };
   const readData = async () => {
     let tmpAry = [];
