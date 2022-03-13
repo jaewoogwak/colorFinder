@@ -5,7 +5,7 @@ import Box from "./Box";
 import { collection, addDoc } from "firebase/firestore";
 import { db } from "../fb";
 import create from "zustand";
-import { easy } from "../Color";
+import { easy, hard, medium } from "../Color";
 
 let STAGE_NUM = 1; // dd
 let STAGE_MAX = 13;
@@ -38,7 +38,6 @@ const Home = () => {
   const [score, setScore] = useState(0);
   let timeCount = useRef(stage + 5);
   const [tCount, setTCount] = useState(timeCount.current);
-  const colorSet = easy;
   // const { isRunning, setIsRunning2 } = useStore();
   // const { stage, setStage2 } = useStore();
   // const { size, setSize2 } = useStore();
@@ -72,20 +71,19 @@ const Home = () => {
     setOther(num);
   };
   const getRandomColor = () => {
-    // var letters = "0123456789ABCDEF";
-    // var color = "#";
-    // let rColor = "";
-    // for (var i = 0; i < 6; i++) {
-    //   color += letters[Math.floor(Math.random() * 16)];
-    // }
-    // for (let i = 0; i < color.length; i++) {
-    //   if (isNaN(color[i]) == false) {
-    //     rColor += (color[i] + 9) % 10;
-    //   } else {
-    //     rColor += color[i];
-    //   }
-    // }
-    // new logic
+    // palette array
+    let colorSet;
+    if (stage < 7) {
+      // easy mode
+      colorSet = easy;
+    } else if (7 <= stage && stage < 13) {
+      // medium mode
+      colorSet = medium;
+    } else {
+      // hard mode
+      colorSet = hard;
+    }
+
     const randomColorNum = Math.floor(Math.random() * colorSet.length);
     console.log("randNum :", randomColorNum);
     let color1 = colorSet[randomColorNum].color;
