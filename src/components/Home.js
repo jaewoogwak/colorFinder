@@ -150,11 +150,12 @@ const Home = () => {
       timeCount.current = timeCount.current - 1;
       setTCount((prev) => prev - 1);
       console.log("time in useEffect", timeCount, tCount, isRunning, size);
-      if (timeCount.current <= 0 && isRunning == true) {
+      if (timeCount.current <= 0) {
         console.log("game over");
+        setIsRunning(false);
+
         clearInterval(timerId);
         // submitGameInfo();
-        setIsRunning(false);
       }
     }, 1000);
     return () => clearInterval(timerId);
