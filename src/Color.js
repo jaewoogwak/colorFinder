@@ -29,7 +29,7 @@ export const medium = [
   // warm yellow
   { color: "#FAED7D", rColor: "#FAED0D" },
   // light green
-  { color: "#CEF279", rColor: "#CEF279" },
+  { color: "#CEF279", rColor: "#CEF290" },
 ];
 
 export const hard = [
