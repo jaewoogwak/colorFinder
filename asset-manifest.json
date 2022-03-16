@@ -1,0 +1,10 @@
+{
+  "files": {
+    "main.js": "/colorFinder/static/js/main.f05c4921.js",
+    "index.html": "/colorFinder/index.html",
+    "main.f05c4921.js.map": "/colorFinder/static/js/main.f05c4921.js.map"
+  },
+  "entrypoints": [
+    "static/js/main.f05c4921.js"
+  ]
+}
