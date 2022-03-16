@@ -5,7 +5,6 @@ import App from "./App";
 
 ReactDOM.render(
   <BrowserRouter>
-    <title>hi</title>
     <App />
   </BrowserRouter>,
 

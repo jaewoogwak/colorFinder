@@ -11,11 +11,12 @@ const App = () => {
   console.log("app", app);
   return (
     <div>
-      <Routes>
+      {/* <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/rank" element={<Rank />} />
         <Route path="*" element={<NotFound />} />
-      </Routes>
+      </Routes> */}
+      <Home />
     </div>
   );
 };
