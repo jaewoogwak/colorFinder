@@ -1,4 +1,4 @@
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import { getFirestore } from "firebase/firestore";
 import { collection, addDoc, getDocs } from "firebase/firestore";
 import { useEffect, useState } from "react";
@@ -7,12 +7,12 @@ import styled from "styled-components";
 
 const db = getFirestore();
 
-const Rank = () => {
+const Rank = ({ onClickReStart }) => {
   const [userRank, setUserRank] = useState([]);
   const [TopRank, setTopRank] = useState([]);
-  // const { onClickRestart } = useStore();
   const goBack = () => {
-    // onClickRestart();
+    console.log("goback");
+    onClickReStart();
   };
   const readData = async () => {
     let tmpAry = [];
@@ -63,9 +63,11 @@ const Rank = () => {
               </UserRank>
             ))}
       </RankingView>
-      <Link to="/">Restart</Link>
+
       <Restart>
-        <ReStartButton onClick={goBack}>Restart</ReStartButton>
+        <ReStartButton onClick={goBack}>
+          <Link to="/colorFinder">Restart</Link>
+        </ReStartButton>
       </Restart>
     </RankPageView>
   );
