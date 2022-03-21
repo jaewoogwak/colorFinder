@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-const Nickname = ({ getUserName }) => {
+const Nickname = ({ getUserName, setEnrolled }) => {
   const [name, setName] = useState("");
   const nav = useNavigate();
   if (localStorage.getItem("name")) {
@@ -17,6 +17,7 @@ const Nickname = ({ getUserName }) => {
     console.log(`Hi ${name}!`);
     localStorage.setItem("name", name);
     getUserName();
+    setEnrolled();
     nav("/colorFinder");
   };
 

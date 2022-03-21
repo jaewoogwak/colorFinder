@@ -14,6 +14,7 @@ const App = () => {
   console.log("app", app);
 
   const [isRunning, setIsRunning] = useState(true);
+  const [isEnrolled, setIsEnrolled] = useState(false);
   const [stage, setStage] = useState(1);
   const [size, setSize] = useState(2);
   const [stage_list, setStage_list] = useState([]);
@@ -106,6 +107,7 @@ const App = () => {
       console.error("Error adding document: ", e);
     }
   };
+
   const getUserName = () => {
     const name = localStorage.getItem("name");
     if (name != null && name != undefined) {
@@ -115,9 +117,17 @@ const App = () => {
       return false;
     }
   };
+  const setEnrolled = () => {
+    setIsEnrolled(true);
+  };
   useEffect(() => {
-    const name = getUserName();
-    if (name != false) {
+    let name;
+    if (localStorage.getItem("name") == null) {
+      name = getUserName();
+    }
+    name = localStorage.getItem("name");
+
+    if (name != false && isEnrolled) {
       console.log("username", username);
       init();
       const timerId = setInterval(() => {
@@ -128,7 +138,9 @@ const App = () => {
           console.log("game over");
           setIsRunning(false);
           clearInterval(timerId);
-          submitGameInfo();
+          if (timeCount.current > -1) {
+            submitGameInfo();
+          }
         }
       }, 1000);
       return () => clearInterval(timerId);
@@ -140,7 +152,12 @@ const App = () => {
   return (
     <div>
       <Routes>
-        <Route path="/" element={<Nickname getUserName={getUserName} />} />
+        <Route
+          path="/"
+          element={
+            <Nickname getUserName={getUserName} setEnrolled={setEnrolled} />
+          }
+        />
         <Route
           path="/colorfinder"
           element={
