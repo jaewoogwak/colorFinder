@@ -22,6 +22,7 @@ const Rank = ({ onClickReStart }) => {
       console.log(`${doc.id} => ${doc.data().name}`);
       tmpAry.push({
         id: doc.id,
+        username: doc.data().username,
         score: doc.data().score,
         stage: doc.data().stage,
       });
@@ -50,16 +51,16 @@ const Rank = ({ onClickReStart }) => {
         {userRank.length >= 10
           ? TopRank.map((rank, idx) => (
               <UserRank key={rank.id}>
-                {`${idx + 1}. id : ${rank.id} score : ${rank.score} stage : ${
-                  rank.stage
-                }`}
+                {`${idx + 1}. name : ${rank.username} score : ${
+                  rank.score
+                } stage : ${rank.stage}`}
               </UserRank>
             ))
           : userRank.map((rank, idx) => (
               <UserRank key={rank.id}>
-                {`${idx + 1}. id : ${rank.id} score : ${rank.score} stage : ${
-                  rank.stage
-                }`}
+                {`${idx + 1}. name : ${rank.username} score : ${
+                  rank.score
+                } stage : ${rank.stage}`}
               </UserRank>
             ))}
       </RankingView>

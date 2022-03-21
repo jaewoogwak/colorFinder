@@ -1,21 +1,18 @@
 import { useEffect, useRef, useState } from "react";
 import { Link, Route, Routes } from "react-router-dom";
-import styled from "styled-components";
 import { easy, hard, medium } from "./Color";
-import Box from "./components/Box";
 import Home from "./components/Home";
 import NotFound from "./components/NotFound";
 import Rank from "./components/Rank";
 import { app, db } from "./fb";
 import { collection, addDoc } from "firebase/firestore";
+import Nickname from "./components/Nickname";
 let STAGE_NUM = 1;
 let STAGE_MAX = 13;
 
 const App = () => {
   console.log("app", app);
-  const f1 = () => {
-    console.log("f1 !");
-  };
+
   const [isRunning, setIsRunning] = useState(true);
   const [stage, setStage] = useState(1);
   const [size, setSize] = useState(2);
@@ -26,6 +23,7 @@ const App = () => {
   const [score, setScore] = useState(0);
   let timeCount = useRef(stage + 5);
   const [tCount, setTCount] = useState(timeCount.current);
+  const [username, setUsername] = useState();
 
   const onClickReStart = () => {
     console.log("onclickrestart");
@@ -91,11 +89,15 @@ const App = () => {
 
   const submitGameInfo = async () => {
     console.log("submit game info");
+    const name = username;
     const userScore = score;
     const userStage = stage;
-    console.log(`user game info => score : ${score} stage : ${stage}`);
+    console.log(
+      `user game info => username : ${name} score : ${score} stage : ${stage}`
+    );
     try {
       const docRef = await addDoc(collection(db, "rank"), {
+        username: name,
         score: userScore,
         stage: userStage,
       });
@@ -104,26 +106,41 @@ const App = () => {
       console.error("Error adding document: ", e);
     }
   };
-
+  const getUserName = () => {
+    const name = localStorage.getItem("name");
+    if (name != null && name != undefined) {
+      setUsername(name);
+      return name;
+    } else {
+      return false;
+    }
+  };
   useEffect(() => {
-    init();
-    const timerId = setInterval(() => {
-      timeCount.current = timeCount.current - 1;
-      setTCount((prev) => prev - 1);
-      console.log("time in useEffect", timeCount);
-      if (timeCount.current <= 0) {
-        console.log("game over");
-        setIsRunning(false);
-        clearInterval(timerId);
-        // submitGameInfo();
-      }
-    }, 1000);
-
-    return () => clearInterval(timerId);
-  }, [stage, isRunning]);
+    const name = getUserName();
+    if (name != false) {
+      console.log("username", username);
+      init();
+      const timerId = setInterval(() => {
+        timeCount.current = timeCount.current - 1;
+        setTCount((prev) => prev - 1);
+        console.log("time in useEffect", timeCount);
+        if (timeCount.current <= 0) {
+          console.log("game over");
+          setIsRunning(false);
+          clearInterval(timerId);
+          submitGameInfo();
+        }
+      }, 1000);
+      return () => clearInterval(timerId);
+    } else {
+      console.log("not yet user name input");
+      getUserName();
+    }
+  }, [username, stage, isRunning]);
   return (
     <div>
       <Routes>
+        <Route path="/" element={<Nickname getUserName={getUserName} />} />
         <Route
           path="/colorfinder"
           element={
@@ -146,6 +163,7 @@ const App = () => {
           path="/rank"
           element={<Rank onClickReStart={onClickReStart} />}
         />
+
         <Route path="*" element={<NotFound />} />
       </Routes>
     </div>
