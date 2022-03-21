@@ -121,12 +121,10 @@ const App = () => {
     setIsEnrolled(true);
   };
   useEffect(() => {
-    let name;
-    if (localStorage.getItem("name") == null) {
-      name = getUserName();
-    }
-    name = localStorage.getItem("name");
+    let name = localStorage.getItem("name") && getUserName();
+    if (name) setIsEnrolled(true);
 
+    console.log("name, isEnrolled", name, isEnrolled);
     if (name != false && isEnrolled) {
       console.log("username", username);
       init();

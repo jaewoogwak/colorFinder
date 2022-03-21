@@ -1,13 +1,17 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
 const Nickname = ({ getUserName, setEnrolled }) => {
   const [name, setName] = useState("");
   const nav = useNavigate();
-  if (localStorage.getItem("name")) {
-    console.log("page change!");
-    nav("/colorFinder");
-  }
+
+  useEffect(() => {
+    if (localStorage.getItem("name")) {
+      console.log("page change!");
+      nav("/colorFinder");
+      console.log("!!");
+    }
+  });
 
   const onChange = (e) => {
     const { value } = e.target;
