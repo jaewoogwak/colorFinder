@@ -12,8 +12,7 @@ let STAGE_MAX = 13;
 
 const App = () => {
   console.log("app", app);
-
-  const [isRunning, setIsRunning] = useState(true);
+  const [isRunning, setIsRunning] = useState();
   const [isEnrolled, setIsEnrolled] = useState(false);
   const [stage, setStage] = useState(1);
   const [size, setSize] = useState(2);
@@ -90,7 +89,7 @@ const App = () => {
 
   const submitGameInfo = async () => {
     console.log("submit game info");
-    const name = username;
+    const name = localStorage.getItem("name");
     const userScore = score;
     const userStage = stage;
     console.log(
@@ -111,7 +110,6 @@ const App = () => {
   const getUserName = () => {
     const name = localStorage.getItem("name");
     if (name != null && name != undefined) {
-      setUsername(name);
       return name;
     } else {
       return false;
@@ -121,32 +119,29 @@ const App = () => {
     setIsEnrolled(true);
   };
   useEffect(() => {
-    let name = localStorage.getItem("name") && getUserName();
+    let name = localStorage.getItem("name");
     if (name) setIsEnrolled(true);
 
-    console.log("name, isEnrolled", name, isEnrolled);
-    if (name != false && isEnrolled) {
-      console.log("username", username);
+    console.log("name", name, "isRunning:", isRunning);
+    if (name != false && isRunning) {
       init();
       const timerId = setInterval(() => {
         timeCount.current = timeCount.current - 1;
         setTCount((prev) => prev - 1);
         console.log("time in useEffect", timeCount);
         if (timeCount.current <= 0) {
+          submitGameInfo();
           console.log("game over");
           setIsRunning(false);
           clearInterval(timerId);
-          if (timeCount.current > -1) {
-            submitGameInfo();
-          }
         }
       }, 1000);
       return () => clearInterval(timerId);
     } else {
       console.log("not yet user name input");
-      getUserName();
+      //getUserName();
     }
-  }, [username, stage, isRunning]);
+  }, [stage, isRunning]);
   return (
     <div>
       <Routes>
