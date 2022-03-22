@@ -1,10 +1,10 @@
 {
   "files": {
-    "main.js": "/colorFinder/static/js/main.6a32148e.js",
+    "main.js": "/colorFinder/static/js/main.e407d84b.js",
     "index.html": "/colorFinder/index.html",
-    "main.6a32148e.js.map": "/colorFinder/static/js/main.6a32148e.js.map"
+    "main.e407d84b.js.map": "/colorFinder/static/js/main.e407d84b.js.map"
   },
   "entrypoints": [
-    "static/js/main.6a32148e.js"
+    "static/js/main.e407d84b.js"
   ]
 }
