@@ -9,10 +9,10 @@ const Nickname = ({ getUserName, setEnrolled }) => {
   useEffect(() => {
     if (localStorage.getItem("name")) {
       console.log("page change!");
-      nav("/colorFinder");
+      nav("/home");
       console.log("!!");
     }
-  });
+  }, []);
 
   const onChange = (e) => {
     const { value } = e.target;
@@ -23,12 +23,12 @@ const Nickname = ({ getUserName, setEnrolled }) => {
     localStorage.setItem("name", name);
     getUserName();
     setEnrolled();
-    nav("/colorFinder");
+    nav("/home");
   };
 
   return (
     <RegisterView>
-      <img src="img/logo.jpg" width={450}></img>
+      <img src="img/logo.jpg" alt="logo" width={450}></img>
       <InputView>
         <NicknameView>
           <NicknameInput
@@ -67,3 +67,4 @@ const RegisterButton = styled.button`
 `;
 
 export default Nickname;
+// 휴지말이두루 : 박세현 1등!!!!!!!!!!!!!!!!♥

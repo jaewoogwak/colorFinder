@@ -146,13 +146,13 @@ const App = () => {
     <div>
       <Routes>
         <Route
-          path="/"
+          path="/colorFinder"
           element={
             <Nickname getUserName={getUserName} setEnrolled={setEnrolled} />
           }
         />
         <Route
-          path="/colorfinder"
+          path="/home"
           element={
             <Home
               stage={stage}

@@ -14,7 +14,7 @@ const Rank = ({ onClickReStart }) => {
   const goBack = () => {
     console.log("goback");
     onClickReStart();
-    nav("/colorfinder");
+    nav("/home");
   };
   const readData = async () => {
     let tmpAry = [];
