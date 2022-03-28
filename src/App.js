@@ -148,7 +148,11 @@ const App = () => {
         <Route
           path="/colorFinder"
           element={
-            <Nickname getUserName={getUserName} setEnrolled={setEnrolled} />
+            <Nickname
+              getUserName={getUserName}
+              setEnrolled={setEnrolled}
+              onClickReStart={onClickReStart}
+            />
           }
         />
         <Route

@@ -50,29 +50,55 @@ const Rank = ({ onClickReStart }) => {
     <RankPageView>
       <Title>랭킹</Title>
       <RankingView>
-        <Describe>
-          <RankNumber>순위</RankNumber>
-          <Nickname>닉네임</Nickname>
-          <Score_>점수</Score_>
-          <Stage>스테이지</Stage>
-        </Describe>
-        {userRank.length >= 10
-          ? TopRank.map((rank, idx) => (
-              <UserRank key={rank.id} idx={idx + 1}>
-                <RankNumber>{idx + 1}</RankNumber>
-                <Nickname>{rank.username}</Nickname>
-                <Score>{rank.score}</Score>
-                <Stage>{rank.stage}</Stage>
-              </UserRank>
-            ))
-          : userRank.map((rank, idx) => (
-              <UserRank key={rank.id} idx={idx + 1}>
-                <RankNumber>{idx + 1}</RankNumber>
-                <Nickname>{rank.username}</Nickname>
-                <Score>{rank.score}</Score>
-                <Stage>{rank.stage}</Stage>
-              </UserRank>
-            ))}
+        {/* <thead>
+          <Test>
+            <RankNumber_>순위</RankNumber_>
+            <Nickname_>닉네임</Nickname_>
+            <Score_>점수</Score_>
+            <Stage_>스테이지</Stage_>
+          </Test>
+        </thead>
+        <tbody>
+          <Test>
+            <RankNumber>1</RankNumber>
+            <Nickname>재우</Nickname>
+            <Score>12321</Score>
+            <Stage>20020202</Stage>
+          </Test>
+          <Test>
+            <RankNumber>1재우 재우</RankNumber>
+            <td>재우</td>
+            <td>10</td>
+            <td>5</td>
+          </Test>
+        </tbody> */}
+        <thead>
+          <Describe>
+            <RankNumber_>순위</RankNumber_>
+            <Nickname_>닉네임</Nickname_>
+            <Score_>점수</Score_>
+            <Stage_>스테이지</Stage_>
+          </Describe>
+        </thead>
+        <tbody>
+          {userRank.length >= 10
+            ? TopRank.map((rank, idx) => (
+                <UserRank key={rank.id} idx={idx + 1}>
+                  <RankNumber>{idx + 1}</RankNumber>
+                  <Nickname>{rank.username}</Nickname>
+                  <Score>{rank.score}</Score>
+                  <Stage>{rank.stage}</Stage>
+                </UserRank>
+              ))
+            : userRank.map((rank, idx) => (
+                <UserRank key={rank.id} idx={idx + 1}>
+                  <RankNumber>{idx + 1}</RankNumber>
+                  <Nickname>{rank.username}</Nickname>
+                  <Score>{rank.score}</Score>
+                  <Stage>{rank.stage}</Stage>
+                </UserRank>
+              ))}
+        </tbody>
       </RankingView>
 
       <Restart>
@@ -81,10 +107,14 @@ const Rank = ({ onClickReStart }) => {
     </RankPageView>
   );
 };
+const Test = styled.tr`
+  text-align: center;
+`;
+
 const RankPageView = styled.div`
   margin-top: 5px;
 `;
-const RankingView = styled.div`
+const RankingView = styled.table`
   margin: 0 auto;
   margin-top: 10px;
   padding-bottom: 25px;
@@ -93,17 +123,7 @@ const RankingView = styled.div`
 
   border: 1px solid gray;
 `;
-const UserRank = styled.div`
-  text-align: center;
-  font-size: 20px;
-  padding: 10px;
-  border-bottom: 0.5px solid gray;
-  display: flex;
-  flex-direction: row;
-  justify-content: space-around;
-  background-color: ${(props) => (props.idx % 2 == 1 ? "#eceeef" : "#f9f9fa")};
-`;
-const Describe = styled.div`
+const Describe = styled.tr`
   display: flex;
   flex-direction: row;
   justify-content: space-around;
@@ -112,14 +132,42 @@ const Describe = styled.div`
   border-bottom: 0.5px solid gray;
   background-color: lightgoldenrodyellow;
 `;
-const RankNumber = styled.span``;
-const Nickname = styled.span``;
-const Score_ = styled.span`
-  padding-left: 20px;
+const UserRank = styled.tr`
+  /* text-align: center; */
+  font-size: 20px;
+  padding-top: 5px;
+  border-bottom: 0.5px solid gray;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  text-align: center;
+  background-color: ${(props) => (props.idx % 2 == 1 ? "#eceeef" : "#f9f9fa")};
 `;
-const Score = styled.span``;
 
-const Stage = styled.span``;
+const RankNumber = styled.td`
+  width: 300px;
+`;
+const RankNumber_ = styled.th`
+  width: 300px;
+`;
+const Nickname = styled.td`
+  width: 500px;
+`;
+const Nickname_ = styled.th`
+  width: 500px;
+`;
+const Score = styled.td`
+  width: 300px;
+`;
+const Score_ = styled.th`
+  width: 300px;
+`;
+const Stage = styled.td`
+  width: 300px;
+`;
+const Stage_ = styled.th`
+  width: 300px;
+`;
 const Title = styled.div`
   text-align: center;
   font-size: 48px;

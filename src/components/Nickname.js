@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 
-const Nickname = ({ getUserName, setEnrolled }) => {
+const Nickname = ({ getUserName, setEnrolled, onClickReStart }) => {
   const [name, setName] = useState("");
   const nav = useNavigate();
 
@@ -23,12 +23,13 @@ const Nickname = ({ getUserName, setEnrolled }) => {
     localStorage.setItem("name", name);
     getUserName();
     setEnrolled();
+    onClickReStart();
     nav("/home");
   };
 
   return (
     <RegisterView>
-      <img src="img/logo.jpg" alt="logo" width={450}></img>
+      Color Finder
       <InputView>
         <NicknameView>
           <NicknameInput
