@@ -147,7 +147,7 @@ const App = () => {
     <div>
       <Routes>
         <Route
-          path="/"
+          path="/colorFinder"
           element={
             <Nickname
               getUserName={getUserName}
