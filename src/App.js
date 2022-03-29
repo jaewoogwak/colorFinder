@@ -10,6 +10,7 @@ import Nickname from "./components/Nickname";
 let STAGE_NUM = 1;
 let STAGE_MAX = 13;
 
+// deploy #2
 const App = () => {
   console.log("app", app);
   const [isRunning, setIsRunning] = useState();
