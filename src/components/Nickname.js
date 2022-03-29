@@ -29,7 +29,7 @@ const Nickname = ({ getUserName, setEnrolled, onClickReStart }) => {
 
   return (
     <RegisterView>
-      Color Finder
+      <TitleView>Color Finder</TitleView>
       <InputView>
         <NicknameView>
           <NicknameInput
@@ -53,11 +53,14 @@ const RegisterView = styled.div`
 `;
 const TitleView = styled.p`
   text-align: center;
+  font-size: 50px;
+  font-weight: 900;
 `;
 const InputView = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+  padding-bottom: 140px;
 `;
 const NicknameInput = styled.input`
   height: 25px;

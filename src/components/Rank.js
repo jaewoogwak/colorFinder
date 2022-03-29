@@ -141,6 +141,8 @@ const UserRank = styled.tr`
   flex-direction: row;
   justify-content: space-around;
   text-align: center;
+  padding-top: 5px;
+  padding-bottom: 5px;
   background-color: ${(props) => (props.idx % 2 == 1 ? "#eceeef" : "#f9f9fa")};
 `;
 

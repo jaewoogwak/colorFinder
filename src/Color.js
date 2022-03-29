@@ -36,7 +36,7 @@ export const hard = [
   // dark navy
   { color: "#000042", rColor: "#000030" },
   // emerald
-  { color: "#489FAE", rColor: "#489FAC" },
+  { color: "#489FAE", rColor: "#49b6b8" },
   // brown
   { color: "#662500", rColor: "#662530" },
   // black
